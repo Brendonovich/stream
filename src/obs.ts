@@ -1,5 +1,5 @@
 import { Alignment, CustomInputArgs, Input, Scene, SourceFilters } from "@sceneify/core";
-import { NoiseSuppressFilter, NoiseSuppressMethod } from "@sceneify/filters";
+import { NoiseGateFilter, NoiseSuppressFilter, NoiseSuppressMethod } from "@sceneify/filters";
 import { BrowserSource, VideoCaptureSource } from "@sceneify/sources";
 import { BlurFilter } from "@sceneify/streamfx";
 
@@ -43,6 +43,13 @@ export const micInput = new Input({
 			name: "Noise Suppress",
 			settings: {
 				method: NoiseSuppressMethod.Speex
+			}
+		}),
+		gate: new NoiseGateFilter({
+			name: "Noise Gate",
+			settings: {
+				open_threshold: -35,
+				close_threshold: -45
 			}
 		})
 	}
@@ -90,9 +97,22 @@ export const mainScene = new Scene({
 					height: 810
 				},
 			}),
-			positionX: 1920 - 30,
-			positionY: 760,
+			positionX: 1920 - 20,
+			positionY: 770,
 			alignment: Alignment.BottomRight
-		}
+		},
+		discordServer: {
+			source: new BrowserSource({
+				name: "Discord Server",
+				settings: {
+					url: "https://streamkit.discord.com/overlay/status/949090953497567312?icon=true&online=true&logo=white&text_color=%23ffffff&text_size=14&text_outline_color=%23000000&text_outline_size=0&text_shadow_color=%23000000&text_shadow_size=0&bg_color=%231e2124&bg_opacity=0.95&bg_shadow_color=%23000000&bg_shadow_size=0&invite_code=XpctyaUgG8&limit_speaking=false&small_avatars=false&hide_names=false&fade_chat=0",
+					width: 312,
+					height: 64
+				},
+			}),
+			alignment: Alignment.TopRight,
+			positionX: 1920-10,
+			positionY: 10
+		},
 	}
 })
