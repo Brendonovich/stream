@@ -7,11 +7,14 @@ specifiers:
   '@sceneify/sources': link:../sceneify/packages/sources
   '@sceneify/streamfx': link:../sceneify/packages/streamfx
   autoprefixer: ^10.4.7
+  clsx: ^1.2.1
   postcss: ^8.4.14
   solid-js: ^1.4.7
   tailwindcss: ^3.1.6
+  typescript: ^4.8.3
   vite: ^3.0.0
   vite-plugin-solid: ^2.3.0
+  zod: ^3.19.1
 
 dependencies:
   '@sceneify/animation': link:../sceneify/packages/animation
@@ -19,12 +22,15 @@ dependencies:
   '@sceneify/filters': link:../sceneify/packages/filters
   '@sceneify/sources': link:../sceneify/packages/sources
   '@sceneify/streamfx': link:../sceneify/packages/streamfx
+  clsx: 1.2.1
   solid-js: 1.4.7
+  zod: 3.19.1
 
 devDependencies:
   autoprefixer: 10.4.7_postcss@8.4.14
   postcss: 8.4.14
-  tailwindcss: 3.1.6
+  tailwindcss: 3.1.6_postcss@8.4.14
+  typescript: 4.8.3
   vite: 3.0.0
   vite-plugin-solid: 2.3.0_solid-js@1.4.7+vite@3.0.0
 
@@ -526,6 +532,11 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
+
+  /clsx/1.2.1:
+    resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
+    engines: {node: '>=6'}
+    dev: false
 
   /color-convert/1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}
@@ -1177,10 +1188,12 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /tailwindcss/3.1.6:
+  /tailwindcss/3.1.6_postcss@8.4.14:
     resolution: {integrity: sha512-7skAOY56erZAFQssT1xkpk+kWt2NrO45kORlxFPXUt3CiGsVPhH1smuH5XoDH6sGPXLyBv+zgCKA2HWBsgCytg==}
     engines: {node: '>=12.13.0'}
     hasBin: true
+    peerDependencies:
+      postcss: ^8.0.9
     dependencies:
       arg: 5.0.2
       chokidar: 3.5.3
@@ -1222,6 +1235,12 @@ packages:
 
   /ts-toolbelt/9.6.0:
     resolution: {integrity: sha512-nsZd8ZeNUzukXPlJmTBwUAuABDe/9qtVDelJeT/qW0ow3ZS3BsQJtNkan1802aM9Uf68/Y8ljw86Hu0h5IUW3w==}
+    dev: true
+
+  /typescript/4.8.3:
+    resolution: {integrity: sha512-goMHfm00nWPa8UvR/CPSvykqf6dVV8x/dp0c5mFTMTIu0u0FlGWRioyy7Nn0PGAdHxpJZnuO/ut+PpQ8UiHAig==}
+    engines: {node: '>=4.2.0'}
+    hasBin: true
     dev: true
 
   /update-browserslist-db/1.0.4_browserslist@4.21.2:
@@ -1292,3 +1311,7 @@ packages:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
     engines: {node: '>= 6'}
     dev: true
+
+  /zod/3.19.1:
+    resolution: {integrity: sha512-LYjZsEDhCdYET9ikFu6dVPGp2YH9DegXjdJToSzD9rO6fy4qiRYFoyEYwps88OseJlPyl2NOe2iJuhEhL7IpEA==}
+    dev: false
