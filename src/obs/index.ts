@@ -1,66 +1,52 @@
-import { Easing, setDefaultEasing } from "@sceneify/animation";
+import { Easing, setDefaultEasing, wait } from "@sceneify/animation";
 import { OBS } from "@sceneify/core";
 
-import { animateLayout } from "../utils";
-import { CAM_HEIGHT, CAM_WIDTH, display, fullscreenLayout, GAP, mainScene, micInput, webcam } from "./scenes/main";
+import { animateLayout, setSettingsFromPropertyList } from "../utils";
+import {
+  display,
+  fullscreenLayout,
+  mainScene,
+  micInput,
+  webcam,
+} from "./scenes/main";
 
-setDefaultEasing(Easing.InOut)
+setDefaultEasing(Easing.InOut);
 
 export async function initialize() {
   const obs = new OBS();
 
   await obs.connect("ws://localhost:4455");
 
-  const videoSettings = await obs.call(["GetVideoSettings"]);
+  const videoSettings = await obs.call("GetVideoSettings");
 
   await mainScene.create(obs);
+  await mainScene.makeCurrentScene();
 
-  const displayInputs = await obs.call(["GetInputPropertiesListPropertyItems", {
-    inputName: display.name,
-    propertyName: "display"
-  }])
+  await setSettingsFromPropertyList(display, "display", (i) =>
+    i.name.includes("LG")
+  );
 
-  const displayInput = displayInputs.propertyItems.find(i => (i as any).itemName.includes("LG"));
-
-  if(displayInput !== display.settings.display)
-    await display.setSettings({
-      display: (displayInput as any).itemValue,
-    })
-
+  const displayItem = mainScene.item("display");
   await mainScene.item("display").setTransform({
-    scaleX: videoSettings.baseWidth / mainScene.item("display").transform.sourceWidth,
-    scaleY: videoSettings.baseHeight / mainScene.item("display").transform.sourceHeight,
-  })
+    scaleX: videoSettings.baseWidth / displayItem.transform.sourceWidth,
+    scaleY: videoSettings.baseHeight / displayItem.transform.sourceHeight,
+  });
 
   mainScene.item("systemAudio").source.setVolume({
-      db: -8
-  })
+    db: -8,
+  });
 
-  const micInputs = await obs.call(["GetInputPropertiesListPropertyItems", {
-    inputName: micInput.name,
-    propertyName: "device_id"
-  }]);
+  await setSettingsFromPropertyList(micInput, "device_id", (i) =>
+    i.name.includes("USB Audio")
+  );
 
-  const micInputDevice = micInputs.propertyItems.find(i => (i as any).itemName.includes("USB Audio"));
+  await setSettingsFromPropertyList(webcam, "device", (i) =>
+    i.name.includes("C922")
+  );
 
-  await micInput.setSettings({
-      device_id: (micInputDevice as any).itemValue
-  })
-  let cameraInputs = await obs.call(["GetInputPropertiesListPropertyItems", {
-    inputName: webcam.name,
-    propertyName: "device"
-  }]);
+  await mainScene.item("camera").fetchProperties();
 
-  const webcamInput = cameraInputs.propertyItems.find(i => (i as any).itemName.includes("C922"));
-
-  if(webcam.settings.device !== webcamInput)
-    await webcam.setSettings({
-      device: (webcamInput as any).itemValue
-    })
-
-  await animateLayout(fullscreenLayout())
+  await animateLayout(fullscreenLayout());
 
   await obs.clean();
-
-  await mainScene.makeCurrentScene();
 }

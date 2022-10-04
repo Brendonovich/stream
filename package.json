@@ -6,7 +6,8 @@
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "up-sceneify": "pnpm up \"@sceneify/*@main\""
   },
   "license": "MIT",
   "devDependencies": {
@@ -18,11 +19,11 @@
     "vite-plugin-solid": "^2.3.0"
   },
   "dependencies": {
-    "@sceneify/animation": "link:../sceneify/packages/animation",
-    "@sceneify/core": "link:../sceneify/packages/core",
-    "@sceneify/filters": "link:../sceneify/packages/filters",
-    "@sceneify/sources": "link:../sceneify/packages/sources",
-    "@sceneify/streamfx": "link:../sceneify/packages/streamfx",
+    "@sceneify/animation": "0.0.0-main-8a7025d0",
+    "@sceneify/core": "0.0.0-main-8a7025d0",
+    "@sceneify/filters": "0.0.0-main-8a7025d0",
+    "@sceneify/sources": "0.0.0-main-8a7025d0",
+    "@sceneify/streamfx": "0.0.0-main-8a7025d0",
     "clsx": "^1.2.1",
     "solid-js": "^1.4.7",
     "zod": "^3.19.1"
